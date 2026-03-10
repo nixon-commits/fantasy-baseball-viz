@@ -12,75 +12,55 @@ export function calculatePoints(player, pointValues) {
 }
 
 /**
- * Calculate per-matchup (weekly) points for a player.
+ * Calculate season points and derived averages for a player.
  *
- * For hitters: season points / number of matchup weeks (typically ~23 in a season)
- * For pitchers: season points normalized to the configured avg starts per matchup.
- *   - SP: (season pts / total starts) * avg matchup starts for that pitcher
- *   - RP: season points / matchup weeks (they pitch multiple appearances per week)
- *
- * matchupStarts = how many SP starts your team averages per matchup week
- * matchupWeeks = total matchup weeks in the season (default 23)
+ * Returns season totals as the primary metric, with a simple weekly average
+ * (seasonPoints / matchupWeeks) for balance visualization.
  */
-export function calculateMatchupPoints(player, pointValues, matchupStarts = 7, matchupWeeks = 21) {
+export function calculateSeasonStats(player, pointValues, matchupWeeks = 21) {
   const seasonPts = calculatePoints(player, pointValues);
+  const weeklyAvg = Math.round((seasonPts / matchupWeeks) * 10) / 10;
   const isPitcher = player.pos === "SP" || player.pos === "RP";
 
   if (!isPitcher) {
-    // Hitters: per-week average
-    const gamesPerWeek = (player.G || 140) / matchupWeeks;
     return {
       seasonPoints: seasonPts,
-      perMatchup: Math.round((seasonPts / matchupWeeks) * 10) / 10,
+      weeklyAvg,
       perGame: player.G ? Math.round((seasonPts / player.G) * 10) / 10 : 0,
-      gamesPerWeek: Math.round(gamesPerWeek * 10) / 10,
     };
   }
 
   if (player.pos === "SP") {
-    // Starters: value per start, then scale by team's matchup starts budget.
-    // matchupStarts = total SP starts your team averages per matchup week.
-    // With more starts available, each SP contributes more weekly points.
     const totalStarts = player.GS || 1;
-    const perStart = seasonPts / totalStarts;
-    const pitcherStartsPerWeek = totalStarts / matchupWeeks;
-    // perMatchup scales with matchupStarts: more team starts → more pitcher value
-    const perMatchup = perStart * pitcherStartsPerWeek * (matchupStarts / 7);
-
     return {
       seasonPoints: seasonPts,
-      perStart: Math.round(perStart * 10) / 10,
-      startsPerWeek: Math.round(pitcherStartsPerWeek * 100) / 100,
-      perMatchup: Math.round(perMatchup * 10) / 10,
+      weeklyAvg,
+      perStart: Math.round((seasonPts / totalStarts) * 10) / 10,
     };
   }
 
-  // Relievers: per-week average based on appearances
-  const appsPerWeek = (player.G || 60) / matchupWeeks;
+  // Relievers
   return {
     seasonPoints: seasonPts,
-    perMatchup: Math.round((seasonPts / matchupWeeks) * 10) / 10,
-    appsPerWeek: Math.round(appsPerWeek * 10) / 10,
+    weeklyAvg,
   };
 }
 
 /**
- * Rank players by H2H points with matchup context.
+ * Rank players by season points.
  */
-export function rankByH2HPoints(players, pointValues, matchupStarts = 7, matchupWeeks = 21) {
+export function rankByH2HPoints(players, pointValues, matchupWeeks = 21) {
   const scored = players.map((p) => {
-    const matchup = calculateMatchupPoints(p, pointValues, matchupStarts, matchupWeeks);
+    const stats = calculateSeasonStats(p, pointValues, matchupWeeks);
     return {
       ...p,
-      fantasyPoints: matchup.seasonPoints,
-      perMatchup: matchup.perMatchup,
-      perStart: matchup.perStart || null,
-      startsPerWeek: matchup.startsPerWeek || null,
-      perGame: matchup.perGame || null,
-      appsPerWeek: matchup.appsPerWeek || null,
+      fantasyPoints: stats.seasonPoints,
+      weeklyAvg: stats.weeklyAvg,
+      perStart: stats.perStart || null,
+      perGame: stats.perGame || null,
     };
   });
-  scored.sort((a, b) => b.perMatchup - a.perMatchup);
+  scored.sort((a, b) => b.fantasyPoints - a.fantasyPoints);
   return scored.map((p, i) => ({ ...p, rank: i + 1 }));
 }
 

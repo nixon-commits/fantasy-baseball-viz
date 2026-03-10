@@ -78,8 +78,8 @@ function buildLeagueSlots(rankings, roster) {
   const benchSlots = roster.BE || 0;
   const ilSlots = roster.IL || 0;
   const hitters = rankings.filter((p) => p.pos !== "SP" && p.pos !== "RP");
-  const sps = rankings.filter((p) => p.pos === "SP").sort((a, b) => b.perMatchup - a.perMatchup);
-  const rps = rankings.filter((p) => p.pos === "RP").sort((a, b) => b.perMatchup - a.perMatchup);
+  const sps = rankings.filter((p) => p.pos === "SP").sort((a, b) => b.fantasyPoints - a.fantasyPoints);
+  const rps = rankings.filter((p) => p.pos === "RP").sort((a, b) => b.fantasyPoints - a.fantasyPoints);
 
   // Track used players across all slots to avoid double-counting
   const used = new Set();
@@ -124,7 +124,7 @@ function buildLeagueSlots(rankings, roster) {
         name: label,
         type,
         tierPlayers,
-        avgWeekly: Math.round(avgStat(tierPlayers, "perMatchup") * 10) / 10,
+        avgWeekly: Math.round(avgStat(tierPlayers, "weeklyAvg") * 10) / 10,
         avgSeason: Math.round(avgStat(tierPlayers, "fantasyPoints")),
         topPlayer: tierPlayers[0]?.name || "—",
         bottomPlayer: tierPlayers[tierPlayers.length - 1]?.name || "—",

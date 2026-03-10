@@ -70,11 +70,11 @@ export default function App() {
   }, [allPlayers, year, posType]);
 
   const rankingsA = useMemo(() => {
-    return rankByH2HPoints(filtered, configA.points, configA.matchupStarts ?? 7);
+    return rankByH2HPoints(filtered, configA.points);
   }, [filtered, configA]);
 
   const rankingsB = useMemo(() => {
-    return rankByH2HPoints(filtered, configB.points, configB.matchupStarts ?? 7);
+    return rankByH2HPoints(filtered, configB.points);
   }, [filtered, configB]);
 
   return (
@@ -82,8 +82,7 @@ export default function App() {
       <header className="app-header">
         <h1>H2H Points Scoring Analyzer</h1>
         <p className="subtitle">
-          Adjust scoring settings and matchup starts to see how player rankings
-          shift — powered by real MLB data (2021-2025)
+          Compare scoring formats using real MLB season totals (2021-2025)
         </p>
         <nav className="view-nav">
           <button

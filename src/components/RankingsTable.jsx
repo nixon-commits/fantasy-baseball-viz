@@ -50,9 +50,6 @@ export default function RankingsTable({ rankings, comparisonRankings, configA, c
   const getRowData = (player) => {
     const isPitcher = player.pos === "SP" || player.pos === "RP";
     const perUnit = isPitcher ? player.perStart : player.perGame;
-    const unitsPerWeek = isPitcher
-      ? player.startsPerWeek ?? player.appsPerWeek
-      : player.gamesPerWeek;
     const comp = getCompPlayer(player);
     const delta = comp ? player.rank - comp.rank : null;
     const ptsA = player.fantasyPoints ?? 0;
@@ -92,7 +89,7 @@ export default function RankingsTable({ rankings, comparisonRankings, configA, c
       }
     }
 
-    return { isPitcher, perUnit, unitsPerWeek, comp, delta, ptsA, ptsB, diff, reason, breakdown };
+    return { isPitcher, perUnit, comp, delta, ptsA, ptsB, diff, reason, breakdown };
   };
 
   const sorted = useMemo(() => {
@@ -112,9 +109,8 @@ export default function RankingsTable({ rankings, comparisonRankings, configA, c
         case "team": va = a.team ?? ""; vb = b.team ?? ""; return mult * va.localeCompare(vb);
         case "year": va = a.year; vb = b.year; break;
         case "pos": va = a.pos; vb = b.pos; return mult * va.localeCompare(vb);
-        case "perMatchup": va = a.perMatchup ?? 0; vb = b.perMatchup ?? 0; break;
+        case "weeklyAvg": va = a.weeklyAvg ?? 0; vb = b.weeklyAvg ?? 0; break;
         case "perUnit": va = da.perUnit ?? 0; vb = db.perUnit ?? 0; break;
-        case "stPerWk": va = da.unitsPerWeek ?? 0; vb = db.unitsPerWeek ?? 0; break;
         case "qs": va = (a.pos === "SP" || a.pos === "RP") ? (a.QS ?? 0) : -1; vb = (b.pos === "SP" || b.pos === "RP") ? (b.QS ?? 0) : -1; break;
         case "season": va = a.fantasyPoints ?? 0; vb = b.fantasyPoints ?? 0; break;
         case "ptsA": va = da.ptsA; vb = db.ptsA; break;
@@ -139,10 +135,6 @@ export default function RankingsTable({ rankings, comparisonRankings, configA, c
             <SortHeader label="Tm" sortKey="team" currentSort={sort} onSort={handleSort} className="team-col" />
             <SortHeader label="Yr" sortKey="year" currentSort={sort} onSort={handleSort} className="year-col" />
             <SortHeader label="Pos" sortKey="pos" currentSort={sort} onSort={handleSort} className="pos-col" />
-            <SortHeader label="Pts/Wk" sortKey="perMatchup" currentSort={sort} onSort={handleSort} className="stat-col" title="Points per matchup week" />
-            <SortHeader label="Per Start" sortKey="perUnit" currentSort={sort} onSort={handleSort} className="stat-col" title="Per start (SP) or per game (hitters)" />
-            <SortHeader label="St/Wk" sortKey="stPerWk" currentSort={sort} onSort={handleSort} className="stat-col" title="Starts or games per week" />
-            <SortHeader label="QS" sortKey="qs" currentSort={sort} onSort={handleSort} className="stat-col" title="Quality Starts (pitchers only)" />
             {isCompare ? (
               <>
                 <SortHeader label={labelA} sortKey="ptsA" currentSort={sort} onSort={handleSort} className="score-col" title={`Season points — ${labelA}`} />
@@ -151,7 +143,11 @@ export default function RankingsTable({ rankings, comparisonRankings, configA, c
                 <th className="reason-col" title="Top stat driving the point difference">Reason</th>
               </>
             ) : (
-              <SortHeader label="Season" sortKey="season" currentSort={sort} onSort={handleSort} className="score-col" title="Total season points" />
+              <>
+                <SortHeader label="Season" sortKey="season" currentSort={sort} onSort={handleSort} className="score-col" title="Total season points" />
+                <SortHeader label="Pts/Wk" sortKey="weeklyAvg" currentSort={sort} onSort={handleSort} className="stat-col" title="Weekly average (season / 21)" />
+                <SortHeader label="Per Unit" sortKey="perUnit" currentSort={sort} onSort={handleSort} className="stat-col" title="Per start (SP) or per game (hitters)" />
+              </>
             )}
           </tr>
         </thead>
@@ -180,18 +176,6 @@ export default function RankingsTable({ rankings, comparisonRankings, configA, c
                 <td className="team-col">{player.team}</td>
                 <td className="year-col">{player.year}</td>
                 <td className="pos-col">{player.pos}</td>
-                <td className="stat-col highlight">
-                  {player.perMatchup?.toFixed(1)}
-                </td>
-                <td className="stat-col">
-                  {perUnit != null ? perUnit.toFixed(1) : "—"}
-                </td>
-                <td className="stat-col">
-                  {unitsPerWeek != null ? unitsPerWeek.toFixed(1) : "—"}
-                </td>
-                <td className="stat-col">
-                  {isPitcher ? (player.QS ?? "—") : "—"}
-                </td>
                 {isCompare ? (
                   <>
                     <td className="score-col">
@@ -222,9 +206,17 @@ export default function RankingsTable({ rankings, comparisonRankings, configA, c
                     <td className="reason-col">{reason || "—"}</td>
                   </>
                 ) : (
-                  <td className="score-col">
-                    <strong>{player.fantasyPoints?.toFixed(0)}</strong>
-                  </td>
+                  <>
+                    <td className="score-col">
+                      <strong>{player.fantasyPoints?.toFixed(0)}</strong>
+                    </td>
+                    <td className="stat-col">
+                      {player.weeklyAvg?.toFixed(1)}
+                    </td>
+                    <td className="stat-col">
+                      {perUnit != null ? perUnit.toFixed(1) : "—"}
+                    </td>
+                  </>
                 )}
               </tr>
             );

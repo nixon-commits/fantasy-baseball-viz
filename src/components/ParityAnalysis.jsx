@@ -32,8 +32,8 @@ function computeStats(rankings) {
   const hitters = rankings.filter((p) => !isPitcher(p));
   const pitchers = rankings.filter((p) => isPitcher(p));
 
-  const hPM = hitters.map((p) => p.perMatchup);
-  const pPM = pitchers.map((p) => p.perMatchup);
+  const hPM = hitters.map((p) => p.weeklyAvg);
+  const pPM = pitchers.map((p) => p.weeklyAvg);
 
   const top50 = rankings.slice(0, 50);
   const pitchersInTop50 = top50.filter((p) => isPitcher(p)).length;
@@ -52,8 +52,8 @@ function computeStats(rankings) {
     hP25: percentile(hPM, 25),
     pP25: percentile(pPM, 25),
     pitchersInTop50,
-    top10HAvg: mean(top10H.map((p) => p.perMatchup)),
-    top10PAvg: mean(top10P.map((p) => p.perMatchup)),
+    top10HAvg: mean(top10H.map((p) => p.weeklyAvg)),
+    top10PAvg: mean(top10P.map((p) => p.weeklyAvg)),
     hCount: hitters.length,
     pCount: pitchers.length,
   };
@@ -143,10 +143,10 @@ function ParityScorecard({ statsA, statsB, configA, configB }) {
 }
 
 function DistributionChart({ statsA, statsB, configA, configB }) {
-  const hitterValsA = statsA.hitters.map((p) => p.perMatchup);
-  const pitcherValsA = statsA.pitchers.map((p) => p.perMatchup);
-  const hitterValsB = statsB.hitters.map((p) => p.perMatchup);
-  const pitcherValsB = statsB.pitchers.map((p) => p.perMatchup);
+  const hitterValsA = statsA.hitters.map((p) => p.weeklyAvg);
+  const pitcherValsA = statsA.pitchers.map((p) => p.weeklyAvg);
+  const hitterValsB = statsB.hitters.map((p) => p.weeklyAvg);
+  const pitcherValsB = statsB.pitchers.map((p) => p.weeklyAvg);
 
   const binSize = 3;
   const hBinsA = buildHistogram(hitterValsA, binSize);
@@ -185,7 +185,7 @@ function DistributionChart({ statsA, statsB, configA, configB }) {
 
   return (
     <div className="distribution-charts">
-      <h4>Points per Matchup Week Distribution</h4>
+      <h4>Weekly Average Points Distribution</h4>
       <div className="distribution-grid">
         <div className="distribution-panel">
           <h5>{configA.name || "Format A"}</h5>

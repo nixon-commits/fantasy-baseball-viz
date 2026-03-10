@@ -14,9 +14,8 @@ const CUSTOM_PRESETS_KEY = "fantasy-baseball-custom-presets";
 export const BUILT_IN_PRESETS = {
   myLeague: {
     name: "Current League Settings",
-    description: "Custom H2H points — 13 GS limit, TB scoring, balks/blown saves",
+    description: "Custom H2H points — TB scoring, balks/blown saves",
     type: "points",
-    matchupStarts: 13,
     points: {
       // Hitting
       R: 1, HR: 2, TB: 1, RBI: 1, BB: 1,
@@ -31,7 +30,6 @@ export const BUILT_IN_PRESETS = {
     name: "Dingers 2026 Proposal",
     description: "Proposed scoring — QS 8, IP 3, no W/L, SB 2, CS -1",
     type: "points",
-    matchupStarts: 9,
     points: {
       // Hitting
       R: 1, HR: 2, TB: 1, XBH: 0, RBI: 1, BB: 1,

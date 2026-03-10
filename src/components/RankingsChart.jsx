@@ -86,13 +86,16 @@ export default function RankingsChart({ rankings }) {
     fullName: p.name,
     year: p.year,
     pos: p.pos,
-    perMatchup: p.perMatchup,
+    weeklyAvg: p.weeklyAvg,
     seasonPts: Math.round(p.fantasyPoints),
     rank: p.rank,
     isPitcher: isPitcher(p.pos),
   });
 
-  const weeklyData = rankings.slice(0, 30).map(toChartEntry);
+  const weeklyData = [...rankings]
+    .sort((a, b) => (b.weeklyAvg ?? 0) - (a.weeklyAvg ?? 0))
+    .slice(0, 30)
+    .map(toChartEntry);
 
   const seasonData = [...rankings]
     .sort((a, b) => b.fantasyPoints - a.fantasyPoints)
@@ -102,13 +105,13 @@ export default function RankingsChart({ rankings }) {
   return (
     <>
       <div className="rankings-chart">
-        <h3>Top 30 Players — Points per Matchup Week</h3>
+        <h3>Top 30 Players — Weekly Average</h3>
         <ChartLegend />
         <PlayerBarChart
           data={weeklyData}
-          dataKey="perMatchup"
+          dataKey="weeklyAvg"
           tooltipSuffix="pts/wk"
-          tooltipLabel="Per Matchup"
+          tooltipLabel="Weekly Avg"
         />
       </div>
 

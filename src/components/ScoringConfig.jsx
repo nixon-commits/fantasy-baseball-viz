@@ -21,7 +21,7 @@ export default function ScoringConfig({ config, onChange }) {
 
   const handlePresetChange = (presetKey) => {
     const preset = allPresets[presetKey];
-    onChange({ ...preset, presetKey, matchupStarts: preset.matchupStarts ?? config.matchupStarts ?? 7 });
+    onChange({ ...preset, presetKey });
   };
 
   const updatePointValue = (stat, value) => {
@@ -33,13 +33,6 @@ export default function ScoringConfig({ config, onChange }) {
     });
   };
 
-  const updateMatchupStarts = (value) => {
-    onChange({
-      ...config,
-      matchupStarts: parseFloat(value) || 7,
-    });
-  };
-
   const handleSavePreset = () => {
     if (!saveName.trim()) return;
     const key = `custom_${saveName.trim().toLowerCase().replace(/\s+/g, "_")}`;
@@ -47,7 +40,6 @@ export default function ScoringConfig({ config, onChange }) {
       name: saveName.trim(),
       description: "Custom saved preset",
       type: "points",
-      matchupStarts: config.matchupStarts ?? 7,
       points: { ...config.points },
     });
     onChange({ ...config, presetKey: key });
@@ -79,34 +71,6 @@ export default function ScoringConfig({ config, onChange }) {
         >
           Custom
         </button>
-      </div>
-
-      {/* Matchup Settings — always visible */}
-      <div className="matchup-settings">
-        <h4>Matchup Settings</h4>
-        <div className="matchup-starts-control">
-          <label>
-            Avg SP Starts per Matchup
-            <span className="matchup-value">{config.matchupStarts ?? 7}</span>
-          </label>
-          <input
-            type="range"
-            min="3"
-            max="14"
-            step="1"
-            value={config.matchupStarts ?? 7}
-            onChange={(e) => updateMatchupStarts(e.target.value)}
-          />
-          <div className="range-labels">
-            <span>3</span>
-            <span>7</span>
-            <span>14</span>
-          </div>
-        </div>
-        <p className="matchup-hint">
-          Total SP starts your team averages per weekly matchup.
-          Affects how pitcher value scales relative to hitters.
-        </p>
       </div>
 
       {activeTab === "preset" ? (
