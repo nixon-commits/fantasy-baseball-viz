@@ -74,74 +74,6 @@ function buildHistogram(values, binSize = 2) {
   return bins;
 }
 
-function ScorecardRow({ label, valA, valB, fmt }) {
-  const fmtFn = fmt || ((v) => v.toFixed(1));
-  return (
-    <tr>
-      <td className="scorecard-label">{label}</td>
-      <td className="scorecard-val">{fmtFn(valA)}</td>
-      <td className="scorecard-val">{fmtFn(valB)}</td>
-    </tr>
-  );
-}
-
-function ParityScorecard({ statsA, statsB, configA, configB }) {
-  const ratioA = statsA.pMedian > 0 ? statsA.hMedian / statsA.pMedian : 0;
-  const ratioB = statsB.pMedian > 0 ? statsB.hMedian / statsB.pMedian : 0;
-
-  return (
-    <div className="parity-scorecard">
-      <h4>Parity Scorecard</h4>
-      <table className="scorecard-table">
-        <thead>
-          <tr>
-            <th>Metric</th>
-            <th>{configA.name || "Format A"}</th>
-            <th>{configB.name || "Format B"}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ScorecardRow
-            label="Median Hitter Pts/Wk"
-            valA={statsA.hMedian} valB={statsB.hMedian}
-
-          />
-          <ScorecardRow
-            label="Median Pitcher Pts/Wk"
-            valA={statsA.pMedian} valB={statsB.pMedian}
-
-          />
-          <tr className="scorecard-highlight">
-            <td className="scorecard-label">Hitter/Pitcher Ratio <span className="scorecard-hint">(1.00 = perfect)</span></td>
-            <td className="scorecard-val">{ratioA.toFixed(2)}x</td>
-            <td className="scorecard-val">{ratioB.toFixed(2)}x</td>
-          </tr>
-          <ScorecardRow
-            label="Top-10 Hitter Avg Pts/Wk"
-            valA={statsA.top10HAvg} valB={statsB.top10HAvg}
-
-          />
-          <ScorecardRow
-            label="Top-10 Pitcher Avg Pts/Wk"
-            valA={statsA.top10PAvg} valB={statsB.top10PAvg}
-
-          />
-          <tr>
-            <td className="scorecard-label">Top-10 Gap (P − H) <span className="scorecard-hint">(0 = perfect)</span></td>
-            <td className="scorecard-val">{(statsA.top10PAvg - statsA.top10HAvg).toFixed(1)}</td>
-            <td className="scorecard-val">{(statsB.top10PAvg - statsB.top10HAvg).toFixed(1)}</td>
-          </tr>
-          <tr>
-            <td className="scorecard-label">Pitchers in Top 50 <span className="scorecard-hint">(50% = perfect)</span></td>
-            <td className="scorecard-val">{statsA.pitchersInTop50} ({((statsA.pitchersInTop50 / 50) * 100).toFixed(0)}%)</td>
-            <td className="scorecard-val">{statsB.pitchersInTop50} ({((statsB.pitchersInTop50 / 50) * 100).toFixed(0)}%)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
 function DistributionChart({ statsA, statsB, configA, configB }) {
   const hitterValsA = statsA.hitters.map((p) => p.weeklyAvg);
   const pitcherValsA = statsA.pitchers.map((p) => p.weeklyAvg);
@@ -233,7 +165,6 @@ export default function ParityAnalysis({ rankingsA, rankingsB, configA, configB 
   return (
     <div className="parity-analysis">
       <h3>Hitter / Pitcher Parity Analysis</h3>
-      <ParityScorecard statsA={statsA} statsB={statsB} configA={configA} configB={configB} />
       <DistributionChart statsA={statsA} statsB={statsB} configA={configA} configB={configB} />
     </div>
   );
