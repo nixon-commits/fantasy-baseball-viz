@@ -677,7 +677,7 @@
 
 .rankings-table th {
   background: #0f172a;
-  padding: 0.6rem 0.5rem;
+  padding: 0.6rem 0.75rem;
   text-align: left;
   color: #94a3b8;
   font-weight: 600;
@@ -689,27 +689,105 @@
   white-space: nowrap;
 }
 
+.rankings-table th.team-col,
+.rankings-table th.year-col,
+.rankings-table th.pos-col,
+.rankings-table th.rank-col,
+.rankings-table th.delta-col {
+  text-align: center;
+}
+
+.rankings-table th.stat-col,
+.rankings-table th.score-col {
+  text-align: right;
+}
+
 .rankings-table td {
-  padding: 0.5rem;
+  padding: 0.5rem 0.75rem;
   border-top: 1px solid #1e293b;
   white-space: nowrap;
 }
 
+.rankings-table tbody tr.row-pitcher {
+  background: rgba(56, 189, 248, 0.06);
+}
+.rankings-table tbody tr.row-hitter {
+  background: rgba(251, 191, 36, 0.06);
+}
 .rankings-table tbody tr:hover {
   background: #334155;
 }
 
 .rank-col { width: 40px; text-align: center; }
 .delta-col { width: 50px; text-align: center; font-weight: 600; }
-.name-col { min-width: 140px; font-weight: 500; }
-.team-col { width: 50px; color: #94a3b8; }
-.year-col { width: 50px; color: #94a3b8; }
-.pos-col { width: 60px; color: #94a3b8; }
-.stat-col { text-align: right; color: #cbd5e1; width: 60px; }
-.score-col { text-align: right; color: #60a5fa; }
+.name-col { min-width: 180px; font-weight: 500; white-space: nowrap; }
+.player-first { color: #94a3b8; font-weight: 400; }
+.player-last { color: #f1f5f9; font-weight: 600; }
+.team-col { width: 50px; color: #94a3b8; text-align: center; }
+.year-col { width: 50px; color: #94a3b8; text-align: center; }
+.pos-col { width: 60px; color: #94a3b8; text-align: center; }
+.stat-col { text-align: right; color: #cbd5e1; width: 70px; }
+.score-col { text-align: right; color: #60a5fa; width: 80px; }
 
+.diff-col { text-align: right; width: 70px; font-weight: 600; }
+.reason-col { text-align: left; font-size: 0.78rem; color: #94a3b8; white-space: nowrap; }
+.diff-col.positive { color: #22c55e; }
+.diff-col.negative { color: #ef4444; }
 .delta-col.positive { color: #22c55e; }
 .delta-col.negative { color: #ef4444; }
+
+/* Diff hover tooltip */
+.diff-hover-wrapper {
+  position: relative;
+  cursor: default;
+}
+.diff-tooltip {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 100;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  min-width: 200px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  white-space: nowrap;
+}
+.diff-hover-wrapper:hover .diff-tooltip {
+  display: block;
+}
+.diff-tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.8rem;
+  padding: 2px 0;
+  color: #cbd5e1;
+}
+.diff-tooltip-row.positive span:last-child { color: #22c55e; }
+.diff-tooltip-row.negative span:last-child { color: #ef4444; }
+.diff-tooltip-total {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding-top: 4px;
+  margin-top: 4px;
+  border-top: 1px solid #334155;
+  color: #e2e8f0;
+}
+
+.rankings-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+}
+.rankings-table th.sortable:hover {
+  color: #e2e8f0;
+}
 
 /* ===== Rankings Chart ===== */
 .rankings-chart {
@@ -819,6 +897,23 @@
 .mover-delta.positive { color: #22c55e; }
 .mover-delta.negative { color: #ef4444; }
 .mover-ranks { color: #64748b; font-size: 0.78rem; min-width: 80px; text-align: right; }
+
+.comparison-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.comparison-chart-half h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: #94a3b8;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .comparison-charts {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ===== Empty State ===== */
 .empty-state {

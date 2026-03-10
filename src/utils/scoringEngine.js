@@ -85,64 +85,18 @@ export function rankByH2HPoints(players, pointValues, matchupStarts = 7, matchup
 }
 
 /**
- * When multiple seasons are selected, average each player's stats across
- * their seasons so the same player doesn't occupy multiple roster slots.
- * For a single season, returns players as-is.
- */
-function aggregateMultiYear(players) {
-  const byName = new Map();
-  for (const p of players) {
-    const key = `${p.name}-${p.pos}`;
-    if (!byName.has(key)) byName.set(key, []);
-    byName.get(key).push(p);
-  }
-
-  // Stats to average across seasons
-  const numericStats = [
-    "G", "AB", "R", "H", "1B", "2B", "3B", "HR", "RBI", "BB", "K_hit",
-    "SB", "CS", "HBP", "TB", "XBH", "GIDP",
-    "GS", "W", "L", "SV", "HD", "IP", "H_pitch", "ER", "BB_pitch",
-    "K_pitch", "K", "HR_pitch", "QS", "CG", "SO", "BS", "BK", "HBP_pitch", "SV+HD",
-  ];
-  const ratioStats = ["AVG", "OBP", "SLG", "OPS", "ERA", "WHIP"];
-
-  return Array.from(byName.values()).map((seasons) => {
-    if (seasons.length === 1) return seasons[0];
-
-    const avg = { ...seasons[0] };
-    const n = seasons.length;
-    avg.year = seasons.map((s) => s.year).join("/");
-
-    for (const stat of numericStats) {
-      const vals = seasons.filter((s) => s[stat] != null);
-      avg[stat] = vals.length > 0
-        ? Math.round((vals.reduce((sum, s) => sum + s[stat], 0) / n) * 10) / 10
-        : null;
-    }
-    for (const stat of ratioStats) {
-      const vals = seasons.filter((s) => s[stat] != null && !isNaN(s[stat]));
-      avg[stat] = vals.length > 0
-        ? Math.round((vals.reduce((sum, s) => sum + s[stat], 0) / vals.length) * 1000) / 1000
-        : null;
-    }
-
-    return avg;
-  });
-}
-
-/**
  * Filter players by year.
- * For multi-year selections, aggregates each player into a single averaged entry.
+ * Multi-year selections return individual player-season rows.
  */
 export function filterByYear(players, year) {
-  if (year === "all") return aggregateMultiYear(players);
+  if (year === "all") return players;
   if (year === "last2") {
     const cutoff = new Date().getFullYear() - 1;
-    return aggregateMultiYear(players.filter((p) => p.year >= cutoff));
+    return players.filter((p) => p.year >= cutoff);
   }
   if (year === "last3") {
     const cutoff = new Date().getFullYear() - 2;
-    return aggregateMultiYear(players.filter((p) => p.year >= cutoff));
+    return players.filter((p) => p.year >= cutoff);
   }
   return players.filter((p) => p.year === parseInt(year));
 }

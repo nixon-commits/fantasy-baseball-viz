@@ -14,9 +14,9 @@ const CUSTOM_PRESETS_KEY = "fantasy-baseball-custom-presets";
 export const BUILT_IN_PRESETS = {
   myLeague: {
     name: "Current League Settings",
-    description: "Custom H2H points — 12 GS limit, TB scoring, balks/blown saves",
+    description: "Custom H2H points — 13 GS limit, TB scoring, balks/blown saves",
     type: "points",
-    matchupStarts: 12,
+    matchupStarts: 13,
     points: {
       // Hitting
       R: 1, HR: 2, TB: 1, RBI: 1, BB: 1,
@@ -27,44 +27,22 @@ export const BUILT_IN_PRESETS = {
       SV: 5, BS: -3, HD: 2,
     },
   },
-  espnH2H: {
-    name: "ESPN Standard H2H",
-    description: "Official ESPN public league default scoring",
+  dingersProposal: {
+    name: "Dingers 2026 Proposal",
+    description: "Proposed scoring — QS 8, IP 3, no W/L, SB 2, CS -1",
     type: "points",
-    matchupStarts: 7,
+    matchupStarts: 9,
     points: {
-      R: 1, TB: 1, RBI: 1, BB: 1,
-      K_hit: -1, SB: 1,
-      IP: 3, H_pitch: -1, ER: -2, HD: 2,
-      BB_pitch: -1, K_pitch: 1, W: 5, L: -2, SV: 5,
-    },
-  },
-  qsHeavy: {
-    name: "QS-Heavy H2H",
-    description: "Rewards quality starts heavily, devalues wins",
-    type: "points",
-    matchupStarts: 7,
-    points: {
-      "1B": 1, "2B": 2, "3B": 3, HR: 4,
-      R: 1, RBI: 1, BB: 1, SB: 2,
-      CS: -1, K_hit: -0.5, HBP: 1,
-      IP: 3, K_pitch: 1, W: 2, L: -2,
-      SV: 5, HD: 3, ER: -2, QS: 7,
-      BB_pitch: -1, H_pitch: -1, CG: 5, SO: 7,
-    },
-  },
-  kHeavy: {
-    name: "Strikeout-Heavy H2H",
-    description: "Higher K value for pitchers, penalizes hitter Ks more",
-    type: "points",
-    matchupStarts: 7,
-    points: {
-      "1B": 1, "2B": 2, "3B": 3, HR: 4,
-      R: 1, RBI: 1, BB: 1, SB: 2,
-      CS: -1, K_hit: -1, HBP: 1,
-      IP: 3, K_pitch: 2, W: 5, L: -3,
-      SV: 5, HD: 3, ER: -2, QS: 3,
-      BB_pitch: -1, H_pitch: -1, CG: 5, SO: 7,
+      // Hitting
+      R: 1, HR: 2, TB: 1, XBH: 0, RBI: 1, BB: 1,
+      K_hit: -1, SB: 2,
+      "1B": 0, "2B": 0, "3B": 0, CS: -1,
+      HBP: 1, GIDP: -1,
+      // Pitching
+      IP: 3, K_pitch: 1, W: 0, L: 0,
+      SV: 5, BS: -3, HD: 2, ER: -2,
+      BB_pitch: -1, H_pitch: -1, BK: -1, SO: 5,
+      QS: 8, HR_pitch: 0, HBP_pitch: -1, CG: 5,
     },
   },
 };

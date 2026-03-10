@@ -21,10 +21,10 @@ export default function App() {
   const [activeView, setActiveView] = useState("rankings");
   const [configA, setConfigA] = useState(DEFAULT_CONFIG);
   const [configB, setConfigB] = useState({
-    ...SCORING_PRESETS.espnH2H,
-    presetKey: "espnH2H",
+    ...SCORING_PRESETS.dingersProposal,
+    presetKey: "dingersProposal",
   });
-  const [year, setYear] = useState("all");
+  const [year, setYear] = useState("2025");
   const [posType, setPosType] = useState("all");
   const [liveData, setLiveData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +55,11 @@ export default function App() {
 
   const allPlayers = useMemo(() => {
     if (!liveData) return [];
-    return [...liveData.hitters, ...liveData.pitchers];
+    const combined = [...liveData.hitters, ...liveData.pitchers];
+    // Ohtani appears as both hitter and pitcher — disambiguate with position
+    return combined.map((p) =>
+      p.name === "Shohei Ohtani" ? { ...p, name: `Shohei Ohtani (${p.pos})` } : p
+    );
   }, [liveData]);
 
   const filtered = useMemo(() => {
@@ -166,11 +170,19 @@ export default function App() {
               configB={configB}
             />
             <div className="compare-tables">
+              <FilterBar
+                year={year}
+                posType={posType}
+                onYearChange={setYear}
+                onPosTypeChange={setPosType}
+              />
               <div className="compare-table-wrapper">
                 <h3>{configA.name || "Format A"} Rankings</h3>
                 <RankingsTable
                   rankings={rankingsA}
                   comparisonRankings={rankingsB}
+                  configA={configA}
+                  configB={configB}
                 />
               </div>
             </div>

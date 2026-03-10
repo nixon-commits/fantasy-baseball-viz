@@ -27,21 +27,21 @@ function ChartLegend() {
 
 function PlayerBarChart({ data, dataKey, tooltipSuffix, tooltipLabel }) {
   return (
-    <ResponsiveContainer width="100%" height={480}>
+    <ResponsiveContainer width="100%" height={data.length * 28 + 40}>
       <BarChart
         data={data}
-        margin={{ top: 5, right: 20, left: 10, bottom: 80 }}
+        layout="vertical"
+        margin={{ top: 5, right: 30, left: 10, bottom: 5 }}
       >
-        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-        <XAxis
+        <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal={false} />
+        <XAxis type="number" tick={{ fill: "#94a3b8", fontSize: 11 }} />
+        <YAxis
+          type="category"
           dataKey="name"
-          angle={-55}
-          textAnchor="end"
-          height={100}
+          width={120}
           tick={{ fill: "#94a3b8", fontSize: 11 }}
           interval={0}
         />
-        <YAxis tick={{ fill: "#94a3b8" }} />
         <Tooltip
           contentStyle={{
             background: "#1e293b",
@@ -58,7 +58,7 @@ function PlayerBarChart({ data, dataKey, tooltipSuffix, tooltipLabel }) {
             return p ? `${p.fullName} (${p.pos}, ${p.year})` : label;
           }}
         />
-        <Bar dataKey={dataKey} radius={[4, 4, 0, 0]}>
+        <Bar dataKey={dataKey} radius={[0, 4, 4, 0]} barSize={20}>
           {data.map((entry, index) => (
             <Cell
               key={index}
@@ -74,8 +74,15 @@ function PlayerBarChart({ data, dataKey, tooltipSuffix, tooltipLabel }) {
 export default function RankingsChart({ rankings }) {
   if (!rankings || rankings.length === 0) return null;
 
+  const formatLabel = (p) => {
+    const last = p.name.split(" ").pop();
+    const yr = String(p.year);
+    if (yr.includes("/")) return last;
+    return `${last} '${yr.slice(2)}`;
+  };
+
   const toChartEntry = (p) => ({
-    name: `${p.name.split(" ").pop()} '${String(p.year).slice(2)}`,
+    name: formatLabel(p),
     fullName: p.name,
     year: p.year,
     pos: p.pos,
