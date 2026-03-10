@@ -28,11 +28,28 @@ export const BUILT_IN_PRESETS = {
   },
   dingersProposal: {
     name: "Dingers 2026 Proposal",
-    description: "Proposed scoring — QS 8, IP 3, no W/L, SB 2, CS -1",
+    description: "Proposed scoring — QS 5, IP 3, no W/L, SB 2, CS -1",
     type: "points",
     points: {
       // Hitting
       R: 1, HR: 2, TB: 1, XBH: 0, RBI: 1, BB: 1,
+      K_hit: -1, SB: 2,
+      "1B": 0, "2B": 0, "3B": 0, CS: -1,
+      HBP: 1, GIDP: -1,
+      // Pitching
+      IP: 3, K_pitch: 1, W: 0, L: 0,
+      SV: 5, BS: -3, HD: 2, ER: -2,
+      BB_pitch: -1, H_pitch: -1, BK: -1, SO: 5,
+      QS: 5, HR_pitch: 0, HBP_pitch: -1, CG: 5,
+    },
+  },
+  dingersBonus: {
+    name: "Dingers Bonus",
+    description: "Dingers proposal + HR 0, XBH 1",
+    type: "points",
+    points: {
+      // Hitting
+      R: 1, HR: 0, TB: 1, XBH: 1, RBI: 1, BB: 1,
       K_hit: -1, SB: 2,
       "1B": 0, "2B": 0, "3B": 0, CS: -1,
       HBP: 1, GIDP: -1,
