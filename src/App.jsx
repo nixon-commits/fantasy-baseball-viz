@@ -80,6 +80,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
+        <img src="/mascot.png" alt="Dinger mascot" className="header-mascot" />
         <h1>Dinger Scoring Analyzer</h1>
         <p className="subtitle">
           Compare scoring formats using real MLB season totals (2021-2025)
