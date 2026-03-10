@@ -1027,3 +1027,101 @@
   color: #64748b;
   font-size: 0.95rem;
 }
+
+/* ===== Mobile Optimization ===== */
+@media (max-width: 600px) {
+  .app {
+    overflow-x: hidden;
+  }
+
+  .app-header {
+    padding: 1rem 0.75rem 0.75rem;
+  }
+
+  .header-mascot {
+    height: 48px;
+    left: 0.5rem;
+    top: 0.25rem;
+  }
+
+  .app-header h1 {
+    font-size: 1.2rem;
+    padding-left: 50px;
+  }
+
+  .subtitle {
+    font-size: 0.78rem;
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .view-nav button {
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  .app-main {
+    padding: 0.5rem;
+  }
+
+  .name-col {
+    min-width: 120px;
+  }
+
+  .rankings-table {
+    font-size: 0.75rem;
+  }
+
+  .rankings-table th {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .rankings-table td {
+    padding: 0.35rem 0.5rem;
+  }
+
+  .stat-col { width: 55px; }
+  .score-col { width: 65px; }
+
+  .config-panel {
+    padding: 0.75rem;
+  }
+
+  .roster-balance {
+    padding: 0.75rem;
+  }
+
+  .rankings-chart {
+    padding: 0.75rem;
+  }
+
+  .filter-bar {
+    gap: 0.5rem;
+  }
+
+  .filter-group select {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .data-source-badge {
+    font-size: 0.7rem;
+    flex-wrap: wrap;
+  }
+
+  .comparison-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .comparison-charts {
+    grid-template-columns: 1fr;
+  }
+
+  .distribution-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .balance-cards {
+    grid-template-columns: 1fr;
+  }
+}
