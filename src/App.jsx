@@ -4,6 +4,7 @@ import RankingsTable from "./components/RankingsTable";
 import RankingsChart from "./components/RankingsChart";
 import ComparisonView from "./components/ComparisonView";
 import RosterBalance from "./components/RosterBalance";
+import ParityAnalysis from "./components/ParityAnalysis";
 import FilterBar from "./components/FilterBar";
 import { fetchWithCache } from "./data/mlbApi";
 import { SCORING_PRESETS, MY_LEAGUE_ROSTER } from "./data/scoringPresets";
@@ -164,6 +165,12 @@ export default function App() {
               </div>
             </div>
             <ComparisonView
+              rankingsA={rankingsA}
+              rankingsB={rankingsB}
+              configA={configA}
+              configB={configB}
+            />
+            <ParityAnalysis
               rankingsA={rankingsA}
               rankingsB={rankingsB}
               configA={configA}

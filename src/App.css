@@ -915,6 +915,100 @@
   }
 }
 
+/* ===== Parity Analysis ===== */
+.parity-analysis {
+  background: #1e293b;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  padding: 1.25rem;
+  margin-top: 1rem;
+}
+.parity-analysis h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  color: #f1f5f9;
+}
+.parity-analysis h4 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+}
+
+.scorecard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+.scorecard-table th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid #334155;
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+.scorecard-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #1e293b;
+  color: #e2e8f0;
+}
+.scorecard-label {
+  color: #cbd5e1;
+  font-weight: 500;
+}
+.scorecard-val {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: #60a5fa;
+}
+.scorecard-verdict {
+  text-align: right;
+  font-weight: 600;
+}
+.scorecard-verdict.positive { color: #22c55e; }
+.scorecard-verdict.negative { color: #ef4444; }
+.scorecard-hint {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: #64748b;
+}
+.scorecard-highlight {
+  background: rgba(99, 102, 241, 0.1);
+}
+.scorecard-highlight td {
+  border-bottom: 2px solid #334155;
+}
+
+.distribution-charts h4 {
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+  color: #cbd5e1;
+}
+.distribution-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.distribution-panel {
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+.distribution-panel h5 {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-align: center;
+}
+@media (max-width: 900px) {
+  .distribution-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ===== Empty State ===== */
 .empty-state {
   text-align: center;

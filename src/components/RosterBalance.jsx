@@ -249,6 +249,8 @@ export default function RosterBalance({ rankings, roster }) {
               <YAxis tick={{ fill: "#94a3b8" }} domain={[0, 50]} />
               <Tooltip
                 contentStyle={{ background: "#1e293b", border: "1px solid #334155", borderRadius: 8, color: "#e2e8f0" }}
+                labelStyle={{ color: "#e2e8f0" }}
+                itemStyle={{ color: "#e2e8f0" }}
                 formatter={(value, name, props) => {
                   const d = props.payload;
                   return [
@@ -286,6 +288,8 @@ export default function RosterBalance({ rankings, roster }) {
               <YAxis tick={{ fill: "#94a3b8" }} />
               <Tooltip
                 contentStyle={{ background: "#1e293b", border: "1px solid #334155", borderRadius: 8, color: "#e2e8f0" }}
+                labelStyle={{ color: "#e2e8f0" }}
+                itemStyle={{ color: "#e2e8f0" }}
                 formatter={(value, name, props) => {
                   const d = props.payload;
                   return [

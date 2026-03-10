@@ -93,7 +93,7 @@ export default function ComparisonView({ rankingsA, rankingsB, configA, configB 
                 tick={{ fill: "#94a3b8", fontSize: 11, dx: -5 }}
               />
               <YAxis tick={{ fill: "#94a3b8" }} label={{ value: "Spots Gained", angle: -90, position: "insideLeft", fill: "#94a3b8" }} />
-              <Tooltip contentStyle={tooltipStyle} formatter={formatTooltip} />
+              <Tooltip contentStyle={tooltipStyle} labelStyle={{ color: "#e2e8f0" }} itemStyle={{ color: "#e2e8f0" }} formatter={formatTooltip} />
               <Bar dataKey="delta" radius={[4, 4, 0, 0]}>
                 {risers.map((_, i) => (
                   <Cell key={i} fill="#22c55e" />
@@ -118,7 +118,7 @@ export default function ComparisonView({ rankingsA, rankingsB, configA, configB 
                 tick={{ fill: "#94a3b8", fontSize: 11, dx: -5 }}
               />
               <YAxis tick={{ fill: "#94a3b8" }} label={{ value: "Spots Lost", angle: -90, position: "insideLeft", fill: "#94a3b8" }} />
-              <Tooltip contentStyle={tooltipStyle} formatter={formatTooltip} />
+              <Tooltip contentStyle={tooltipStyle} labelStyle={{ color: "#e2e8f0" }} itemStyle={{ color: "#e2e8f0" }} formatter={formatTooltip} />
               <Bar dataKey="delta" radius={[0, 0, 4, 4]}>
                 {fallers.map((_, i) => (
                   <Cell key={i} fill="#ef4444" />
