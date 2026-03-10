@@ -84,7 +84,6 @@ export default function ScoringConfig({ config, onChange }) {
                   onClick={() => handlePresetChange(key)}
                 >
                   <strong>{preset.name}</strong>
-                  <span>{preset.description}</span>
                 </button>
                 {isCustom && (
                   <button

@@ -40,7 +40,7 @@ export const BUILT_IN_PRESETS = {
       IP: 3, K_pitch: 1, W: 0, L: 0,
       SV: 5, BS: -3, HD: 2, ER: -2,
       BB_pitch: -1, H_pitch: -1, BK: -1, SO: 5,
-      QS: 8, HR_pitch: 0, HBP_pitch: -1, CG: 5,
+      QS: 5, HR_pitch: 0, HBP_pitch: -1, CG: 5,
     },
   },
 };
