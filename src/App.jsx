@@ -80,7 +80,7 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <h1>H2H Points Scoring Analyzer</h1>
+        <h1>Dinger Scoring Analyzer</h1>
         <p className="subtitle">
           Compare scoring formats using real MLB season totals (2021-2025)
         </p>
@@ -198,7 +198,7 @@ export default function App() {
 
       <footer className="app-footer">
         <p>
-          H2H Points Scoring Analyzer — Built for League Managers —
+          Dinger Scoring Analyzer —
           Data: 2021-2025 seasons (MLB Stats API)
         </p>
       </footer>
