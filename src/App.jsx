@@ -81,7 +81,7 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <img src="/mascot.png" alt="Dinger mascot" className="header-mascot" />
-        <h1>Dinger Scoring Analyzer</h1>
+        <h1>Fantasy Baseball Scoring Analyzer</h1>
         <p className="subtitle">
           Compare scoring formats using real MLB season totals (2021-2025)
         </p>
@@ -199,7 +199,7 @@ export default function App() {
 
       <footer className="app-footer">
         <p>
-          Dinger Scoring Analyzer —
+          Fantasy Baseball Scoring Analyzer —
           Data: 2021-2025 seasons (MLB Stats API)
         </p>
       </footer>
